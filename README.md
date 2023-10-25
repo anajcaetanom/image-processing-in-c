@@ -1,5 +1,6 @@
 # Trabalho 1 - Estrutura de Dados
 ## Ana Júlia Caetano Martins
+Matrícula: 20222bsi0091
 ### Passo-a-passo para executar o programa:
 
 1. Abra um terminal ou prompt de comando no diretório onde os arquivos de código e o Makefile estão localizados.
