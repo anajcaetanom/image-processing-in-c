@@ -86,7 +86,7 @@ Image* load_from_ppm(const char* filename) {
     int largura, altura, valor_max;
 
     // Abrindo arquivo.
-    FILE *arquivoPPMcolor = fopen(filename, "rb");
+    FILE *arquivoPPMcolor = fopen(filename, "r");
 
     // Mensagem de erro caso abertura do arquivo falhe.
     if (arquivoPPMcolor == NULL) {
@@ -95,7 +95,7 @@ Image* load_from_ppm(const char* filename) {
     } 
     
     // Adquirindo as informações necessárias do arquivo.
-    fscanf(arquivoPPMcolor, "%2s", tipo);
+    fscanf(arquivoPPMcolor, "%s", tipo);
     fscanf(arquivoPPMcolor, "%d %d", &largura, &altura);
     fscanf(arquivoPPMcolor, "%d", &valor_max);
 
@@ -109,7 +109,7 @@ Image* load_from_ppm(const char* filename) {
     imagemPPMcolor->valor_max = valor_max;
 
     // Preenchimento da imagem.
-    if (strcmp (tipo, "P3") == 0) {
+    if (strcmp (imagemPPMcolor->tipo, "P3") == 0) {
         for (int k = 0; k < largura; k++) {
             for (int i = 0; i < altura; i++) {
                 for (int j = 0; j < 3; j++) {
@@ -128,6 +128,8 @@ Image* load_from_ppm(const char* filename) {
         fprintf(stderr, "\nERROR IN 'LOAD' FUNCTION\nCouldn't create PPM image.\n\n");
         exit(EXIT_FAILURE);
     }
+
+    fclose(arquivoPPMcolor);
 
     return imagemPPMcolor;
 }
@@ -154,7 +156,7 @@ void rgb_to_gray(Image* image_rgb, Image* image_gray) {
 
 
 /**
-* Writes an image to a PPM file.
+* Writes an P2 image to a PPM file.
 *
 * @param image The image to write to the file.
 * @param filename The name of the PPM file to write.
@@ -177,7 +179,9 @@ void write_to_ppm(Image* image, const char* filename){
     for (int k = 0; k < image->largura; k++){
         for (int i = 0; i < image->altura; i++) {
             fprintf(write_image, "%hhu", image->matriz_de_pixels[k][i][0]);
+            fprintf(write_image, " ");
         }
+        fprintf(write_image,"\n");
     }
     
     // Mensagem de erro caso o processo de escrita do arquivo falhe.
@@ -187,3 +191,20 @@ void write_to_ppm(Image* image, const char* filename){
     } 
 
 }
+
+
+////// Função de desalocação ///////
+
+void matrix_deallocation(Image* image) {
+
+        for (int k = 0; k < image->largura; k++) {
+            for (int i = 0; i < image->altura; i++) {
+                free(image->matriz_de_pixels[k][i]);
+            }
+            free(image->matriz_de_pixels[k]);
+        }
+        free(image->matriz_de_pixels);
+        image->matriz_de_pixels = NULL;
+
+}
+

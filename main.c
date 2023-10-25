@@ -3,6 +3,8 @@
 int main() {
 
     int opcao;
+    char caminho[500];
+    int opcaocaminho;
     Image* coloredPPM = NULL;
     Image* greyConverted = NULL;
 
@@ -20,36 +22,29 @@ int main() {
         
         // Menu primeira opção.
         case 1:
-            char caminhoW[500];
-            int opcaocaminhoW;
             // Escolha de diretório.
             puts("Type '1' to use the default directory.");
             puts("Type '2' to enter a different directory.");
-            scanf("%d", &opcaocaminhoW);
+            scanf("%d", &opcaocaminho);
 
-            if (opcaocaminhoW == 1) {
-                char nome_do_arquivoW[50];
+            if (opcaocaminho == 1) {
                 puts("The directory used will be the same as where the program is stored.");
                 printf("Type the file name (with the extension): ");
-                scanf("%s", nome_do_arquivoW);
-                coloredPPM = load_from_ppm(nome_do_arquivoW);
+                scanf("%s", caminho);
+                coloredPPM = load_from_ppm(caminho);
 
                 puts("\nFile loaded sucessfully.");
                 
-            } else if (opcaocaminhoW == 2) {
+            } else if (opcaocaminho == 2) {
                 puts("Type the directory:");
-                scanf("%s", caminhoW);
-                coloredPPM = load_from_ppm(caminhoW);
+                scanf("%s", caminho);
+                coloredPPM = load_from_ppm(caminho);
 
                 puts("\nFile loaded sucessfully.");
             
             } else {
                 puts("\n'1' or '2' only.");
             }
-
-            //teste
-            printf("%s\n", coloredPPM->tipo);
-
 
             break;
 
@@ -61,34 +56,34 @@ int main() {
                 greyConverted = create(coloredPPM->altura, coloredPPM->largura, "P2");
                 greyConverted->valor_max = coloredPPM->valor_max;
                 rgb_to_gray(coloredPPM, greyConverted);
+
+                // Desalocação da matriz colorida pois não será mais utilizada.
+                matrix_deallocation(coloredPPM);
+                free(coloredPPM);
+                coloredPPM = NULL;
+
                 puts("\nConversion finished.");
             }
-
-            //teste
-            printf("%s\n", coloredPPM->tipo);
-            printf("%s\n", greyConverted->tipo);
 
             break;
 
         // Menu terceira opção.
         case 3:
-            //teste
-            printf("%s\n", coloredPPM->tipo);
-            printf("%s\n", greyConverted->tipo);
-        
-            char caminho[500];
-            int opcaocaminho;
             // Escolha de diretório.
             puts("Type '1' to use the default directory.");
             puts("Type '2' to enter a different directory.");
             scanf("%d", &opcaocaminho);
 
             if (opcaocaminho == 1) {
-                char nome_do_arquivo[50];
                 puts("The directory used will be the same as where the program is stored.");
                 printf("Type the file name (with the extension): ");
-                scanf("%s", nome_do_arquivo);
-                write_to_ppm(greyConverted, nome_do_arquivo);
+                scanf("%s", caminho);
+                write_to_ppm(greyConverted, caminho);
+
+                // Desalocação da matriz em tons de cinza pois não será mais utilizada.
+                matrix_deallocation(greyConverted);
+                free(greyConverted);
+                greyConverted = NULL;
 
                 puts("\nFile written successfully.");
                 
@@ -96,6 +91,11 @@ int main() {
                 puts("Type the directory:");
                 scanf("%s", caminho);
                 write_to_ppm(greyConverted, caminho);
+
+                // Desalocação da matriz em tons de cinza pois não será mais utilizada.
+                matrix_deallocation(greyConverted);
+                free(greyConverted);
+                greyConverted = NULL;
 
                 puts("\nFile written successfully.");
             

@@ -13,6 +13,7 @@ void write_to_ppm(Image* image, const char* filename);
 
 void rgb_to_gray(Image* image_rgb, Image* image_gray);
 
+void matrix_deallocation(Image* image);
 
 
 #endif
