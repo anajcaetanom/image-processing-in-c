@@ -1,15 +1,45 @@
-# Trabalho 1 - Estrutura de Dados
-## Ana Júlia Caetano Martins
-Matrícula: 20222bsi0091
-### Passo-a-passo para executar o programa:
+# Project 1 - Data Structures
 
-1. Abra um terminal ou prompt de comando no diretório onde os arquivos de código e o Makefile estão localizados.
-2. No terminal, compile o programa.
-3. Após a compilação bem-sucedida, você pode executar o programa que terá o nome "test_image" de acordo com o makefile.
-4. O programa exibirá um menu interativo com opções para carregar uma imagem PPM, convertê-la para tons de cinza e escrever a imagem convertida em um arquivo. Siga as instruções no terminal para interagir com o programa e escolher as opções desejadas.
+## Overview
 
-### Principais Decisões de Implementação:
-- O programa permite que o usuário escolha o diretório e o nome do arquivo ao carregar e salvar a imagem.
-- A função matrix_deallocation é usada para desalocar a memória alocada dinamicamente para a matriz de pixels, evitando vazamentos de memória.
-- Uso de calloc para evitar problemas com "garbage" na memória heap.
-- Impressões em inglês para evitar gramática sem acentos dependendo do compilador.
+This project, developed by **Ana Júlia Caetano Martins**, is a C application for processing images in the PPM format. The main functionalities include:
+
+- **Loading** a PPM image.
+- **Converting** the image to grayscale.
+- **Saving** the converted image to a new file.
+
+## How to Run the Program
+
+1. **Compilation**:
+   - Open a terminal in the directory containing the source files and the Makefile.
+   - Run `make` to compile the program. This will generate an executable named `test_image`.
+
+2. **Execution**:
+   - In the terminal, execute the program with `./test_image`.
+   - A menu will appear with the following options:
+     - **Load** a PPM image.
+     - **Convert** the image to grayscale.
+     - **Save** the converted image to a file.
+   - Follow the on-screen instructions to interact with the program.
+
+## Implementation Details
+
+- **Memory Allocation**: Uses `calloc` to allocate memory in the heap, ensuring proper initialization and preventing garbage data issues.
+- **Memory Deallocation**: Implements the `matrix_deallocation` function to free dynamically allocated memory for the pixel matrix, preventing memory leaks.
+- **User Interaction**: The program allows the user to specify the directory and file name when loading and saving images, providing flexibility in file management.
+
+## Project Structure
+
+- `main.c`: The main file, responsible for user interaction.
+- `image.c` and `image.h`: Implementation and definitions for image processing functions.
+- `Makefile`: Script to automate the compilation process.
+
+## Future Improvements
+
+- Add support for image formats beyond PPM.
+- Implement additional image editing features, such as brightness and contrast adjustments.
+- Develop a graphical user interface (GUI) for a more user-friendly experience.
+
+---
+
+*This project was developed as part of the Data Structures course during the 2023/2 semester.*
